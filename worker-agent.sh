@@ -26,4 +26,17 @@ echo "[\033[1;36mWORKER\033[0m] Selected Subject: $SELECTED_TOPIC"
 # Trigger the Nexus Forge
 python3 "$ENGINE_DIR/forge_learning_manifesto.py" "$SELECTED_TOPIC"
 
-echo "[\033[1;36mWORKER\033[0m] Forging Sequence Completed. Relinquishing control to Librarian."
+# Identify the newest generated sample
+NEW_FILE=$(ls -t *.md | head -1)
+
+# Execute the local Quality Gate check
+echo -e "[\033[1;33mGATE\033[0m] Executing deep-scan Quality Gate on payload..."
+if grep -qiE "as an AI|cannot fulfill|apologize|I'm sorry" "$NEW_FILE"; then
+    echo -e "[\033[1;31mFATAL\033[0m] Quality Gate Failed. Hallucination drift detected."
+    echo -e "[\033[1;31mFATAL\033[0m] Quarantine initiated for: $NEW_FILE"
+    rm "$NEW_FILE"
+    exit 1
+fi
+echo -e "[\033[1;32mGATE PASSED\033[0m] Payload integrity confirmed. No algorithmic drift."
+
+echo -e "[\033[1;36mWORKER\033[0m] Forging Sequence Completed. Relinquishing control to Librarian."

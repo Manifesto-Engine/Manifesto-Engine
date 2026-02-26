@@ -34,4 +34,18 @@ sed -i "/$MARKER_START/,/$MARKER_END/{ /$MARKER_START/{p; r /dev/stdin
 $LIST
 EOF
 
+# Update the timestamp in the README badge
+CURRENT_TIME=$(date +"%Y--%m--%d_%H:%M")
+sed -i "s/Last_Sync-.*-green/Last_Sync-$CURRENT_TIME-green/g" "$README_FILE"
+
+# Optional: Generate a visual tree structure if the 'tree' command is available
+if command -v tree &> /dev/null; then
+    echo "\`\`\`text" > tree_output.tmp
+    tree -L 1 -P "*.md" --prune --noreport >> tree_output.tmp 2>/dev/null
+    echo "\`\`\`" >> tree_output.tmp
+    # Append tree output below the list if a specific marker exists, or just log it
+    echo "[LIBRARIAN] Visual tree snapshot generated."
+    rm tree_output.tmp
+fi
+
 echo "[LIBRARIAN] README Library updated successfully."
