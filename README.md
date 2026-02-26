@@ -1,7 +1,3 @@
-Since you're building a semantic layer for deterministic state management and AI governance, your README needs to feel like a high-level engineering spec—structured, authoritative, and clear on its "Manifesto."
-
-Here is a professional-grade template for the manifesto-engine.
-
 📜 Manifesto Engine
 The Semantic Layer for Deterministic State & AI Governance
 Manifesto Engine is a declarative framework designed to solve the "black box" problem in AI-driven systems. By enforcing a strict semantic layer over state transitions, it ensures that every action is deterministic, auditable, and aligned with governed intent.
